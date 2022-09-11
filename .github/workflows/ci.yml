@@ -25,12 +25,12 @@ jobs:
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }} & Linux ${{ matrix.os }}
       uses: actions/setup-node@v3
-      env:
-        JWT_SECRET: de2421d38139cc0900db55d078a44f1974a6568db3821c2e6ed6ba1af9c4
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
     - run: yarn install
     - run: yarn typecheck
-    #- run: yarn build --if-present
-    - run: yarn test
+    - name: Test
+      env:
+        JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      run: yarn test
